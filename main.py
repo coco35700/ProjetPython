@@ -5,7 +5,6 @@ from model.UnSerializerInstallation import UnSerializerInstallation
 
 ''' instanciates our database '''
 data = DataBase()
-data.connect()
 
 ''' tables creation '''
 data.creationTableActivity()
@@ -17,11 +16,11 @@ seri = UnSerializerActivity()
 seri.unSerialize()
 data.exportObjectList(seri.collection)
 
-seri = UnSerializerEquipment()
+seri = UnSerializerInstallation()
 seri.unSerialize()
 data.exportObjectList(seri.collection)
 
-seri = UnSerializerInstallation()
+seri = UnSerializerEquipment()
 seri.unSerialize()
 data.exportObjectList(seri.collection)
 

@@ -36,7 +36,8 @@ class DataBase:
 		self.conn.commit()
 
 	def exportObjectList(self,listObjects):
+
 		for item in listObjects:
 			item.exportToDataBase(self)
 
-		
+		self.conn.commit()

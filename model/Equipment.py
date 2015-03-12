@@ -18,12 +18,10 @@ class Equipment :
 	def __str__(self):
 		return "EQUIPMENT [nom : "+self.equNom+", comLib : " + self.comLib + " , num INSEE : " + self.comInsee+" ]"
 
-	def xstr(self,s):
-		return "bb" if s is None else str(s)
-
 	def exportToDataBase(self,database):
 		
 		database.c.execute('''INSERT INTO equipment
     		VALUES (\"{0}\", \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\")'''.format(
     			self.comInsee,self.comLib,self.equipmentFile,
     			self.equAnneeService,self.equNom.replace('"',"'"),self.equNomBatiment))
+		
