@@ -22,9 +22,8 @@ class Equipment :
 		return "bb" if s is None else str(s)
 
 	def exportToDataBase(self,database):
-		print(self.xstr(self.equNomBatiment))
-
+		
 		database.c.execute('''INSERT INTO equipment
     		VALUES (\"{0}\", \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\")'''.format(
     			self.comInsee,self.comLib,self.equipmentFile,
-    			self.equAnneeService,self.equNom,self.equNomBatiment))
+    			self.equAnneeService,self.equNom.replace('"',"'"),self.equNomBatiment))

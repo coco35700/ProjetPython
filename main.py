@@ -7,15 +7,15 @@ from model.UnSerializerInstallation import UnSerializerInstallation
 data = DataBase()
 data.connect()
 
-''' creates tables '''
+''' tables creation '''
 data.creationTableActivity()
 data.creationTableEquipment()
 data.creationTableInstallation()
 
 ''' export json data into the dataBase '''
-#seri = UnSerializerActivity()
-#seri.unSerialize()
-#data.exportObjectList(seri.collection)
+seri = UnSerializerActivity()
+seri.unSerialize()
+data.exportObjectList(seri.collection)
 
 seri = UnSerializerEquipment()
 seri.unSerialize()
@@ -25,10 +25,6 @@ seri = UnSerializerInstallation()
 seri.unSerialize()
 data.exportObjectList(seri.collection)
 
-tmp = data.c.execute("select * from equipment")
-for x in tmp:
-	print(x)
-
-''' commit and disconnect ''' 
+''' commit and disconnection ''' 
 data.conn.commit()
 data.disconnect()
