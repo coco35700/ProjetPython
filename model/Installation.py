@@ -20,4 +20,9 @@ class Installation:
 
 	def __str__(self):
 		return "INSTALLATION [commune : " + self.comLib + " , num insEE : " + self.comInsee+" , nb Equipements : "+self.nb_Equipements+" ]"
+
+	def exportToDataBase(self,database):
+		database.c.execute(''' INSERT INTO installations VALUES (\"{0}\", \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\", \"{6}\", \"{7}\")'''.format(
+			self.comLib, self.comInsee, self.insCodePostal , self.insLieuDit, self.insNoVoie,
+			self.insLibelleVoie, self.nb_Equipements , self.nb_FicheEquipement))
 		

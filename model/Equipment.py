@@ -6,14 +6,25 @@ class Equipment :
 		all of thems are Strings
 	'''
 
-	def __init__(self,comInsee,comLib,equipmentFile,equAnneeService,equDateMaj,equNomBatiment):
+	def __init__(self,comInsee,comLib,equipmentFile,equAnneeService,equNom,equNomBatiment):
 
 		self.comInsee = comInsee 
 		self.comLib = comLib
 		self.equipmentFile = equipmentFile
 		self.equAnneeService = equAnneeService
-		self.equDateMaj = equDateMaj
+		self.equNom = equNom
 		self.equNomBatiment = equNomBatiment
 
 	def __str__(self):
-		return "EQUIPMENT [comLib : " + self.comLib + " , num INSEE : " + self.comInsee+" , lastMAJ : "+self.equDateMaj+" ]"
+		return "EQUIPMENT [nom : "+self.equNom+", comLib : " + self.comLib + " , num INSEE : " + self.comInsee+" ]"
+
+	def xstr(self,s):
+		return "bb" if s is None else str(s)
+
+	def exportToDataBase(self,database):
+		print(self.xstr(self.equNomBatiment))
+
+		database.c.execute('''INSERT INTO equipment
+    		VALUES (\"{0}\", \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\")'''.format(
+    			self.comInsee,self.comLib,self.equipmentFile,
+    			self.equAnneeService,self.equNom,self.equNomBatiment))

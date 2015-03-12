@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 import json
-from Activity import Activity
+from model.Activity import Activity
 
 class UnSerializerActivity :
 	""" class representing a collection of serialised
 		activities
 	"""
-	path = "../data/Activity.json"
+	path = "data/Activity.json"
 
 	def __init__(self):
 		self.collection = []
@@ -23,9 +23,3 @@ class UnSerializerActivity :
 					,item["ActCode"],item["ActLib"],item["EquActivitePraticable"],item["EquActivitePratique"],
 					item["EquActiviteSalleSpe"],item["ActNivLib"])
 				self.collection.append(acti)
-
-
-seri = UnSerializerActivity()
-seri.unSerialize()
-for equi in seri.collection :
-	print(equi) 

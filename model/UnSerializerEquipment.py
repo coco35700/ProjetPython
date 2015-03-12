@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 import json
-from Equipment import Equipment
+from model.Equipment import Equipment
 
 class UnSerializerEquipment :
 	""" class representing a collection of serialised
 		equipments
 	"""
-	path = "../data/Equipment.json"
+	path = "data/Equipment.json"
 
 	def __init__(self):
 		self.collection = []
@@ -20,11 +20,7 @@ class UnSerializerEquipment :
 
 			for item in json_data["data"]:
 				equi = Equipment(item["ComInsee"],item["ComLib"],item["EquipementFiche"],item["EquAnneeService"]
-					,item["EquDateMaj"],item["EquNomBatiment"])
+					,item["EquNom"],item["EquNomBatiment"])
 				self.collection.append(equi)
 
 
-seri = UnSerializerEquipment()
-seri.unSerialize()
-for equi in seri.collection :
-	print(equi) 

@@ -22,3 +22,10 @@ class Activity :
 
 	def __str__(self):
 		return "ACTIVITY [commune : " + self.comLib + " , num INSEE : " + self.inseeNb+" , id : "+self.equipementId+" ]"
+
+	def exportToDataBase(self,database):
+		database.c.execute('''INSERT INTO activity
+    		VALUES (\"{0}\", \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\", \"{6}\", \"{7}\", \"{8}\", \"{9}\")'''.format(
+    			self.inseeNb,self.comLib,self.equipementId,self.equNbEquIdentique,self.actCode,self.actLib,
+				self.equActivitePraticable,self.equActivitePratique,self.equActiviteSalleSpe,self.actNivLib))
+
