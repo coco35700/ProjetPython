@@ -46,7 +46,7 @@ class WebManager():
 		if(RA != "" and RE == "" and RI == "" ):
 			return self.searchActivity(RA)
 		elif(RE != "" and RA == "" and RI == "" ):
-			return "<h1>Afficher table equipment<h1>"
+			return self.searchEquipment(RE)
 		elif(RI != "" and RA == "" and RE == "" ):
 			return "<h1>Afficher table installations<h1>"
 		else:
@@ -82,6 +82,23 @@ class WebManager():
 		chaine = "<table style='width:100%' border='1'>"+bandeau
 
 		for line in c.execute("select * from activity where inseeNb ='"+param+"'"" OR comLib like '%"+param+"%' OR equipementId ='"+param+"' OR actlib like '%"+param+"%'").fetchall():
+			chaine = chaine + "<tr>"
+			for elem in range(len(line)):
+				chaine = chaine+"<td>"+line[elem]+"</td>"
+
+			chaine = chaine + "</tr>"
+		return chaine+"</table>"
+
+	@cherrypy.expose
+	def searchEquipment(self,param):
+		conn = sqlite3.connect(dataBasePath)
+		c = conn.cursor();
+
+		bandeau = "<tr><th>comInsee</th><th>comLib</th><th>equipmentFile</th><th>equAnneeService</th>"
+		bandeau = bandeau + "<th>equNom</th><th>equNomBatiment </th></tr>"
+		chaine = "<table style='width:100%' border='1'>"+bandeau
+
+		for line in c.execute("select * from equipment").fetchall():
 			chaine = chaine + "<tr>"
 			for elem in range(len(line)):
 				chaine = chaine+"<td>"+line[elem]+"</td>"
