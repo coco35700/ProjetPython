@@ -1,15 +1,16 @@
 # ProjetPython
 
---- git managment
-
-git add *
-git commit -a -m "message"
-git push
-
---- usefull URLS : 
-
-http://nsal.im/iut/python
-http://data.paysdelaloire.fr/donnees/detail/equipements-sportifs-espaces-et-sites-de-pratiques-en-pays-de-la-loire-activites-des-fiches-equ/
-https://github.com/sebprunier/installations-sportives-pdl
-
 --- How to ---
+
+you will find at the ROOT two main files : 
+	- DatabaseGenerator which allows you to recreate the database
+	- WebManager which allows you to launch the website
+
+--- Project Structure ---
+
+model contains the python files representing an Activity, an Equipment 
+	 and an Installation
+
+dataBase contains the python file used to generate the database and 
+	the database itself : DB.db
+

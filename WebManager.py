@@ -1,11 +1,11 @@
 import cherrypy
 import sqlite3
 
-dataBasePath = "../dataBase/DB.db"
+dataBasePath = "dataBase/DB.db"
 
 class WebManager():
-	"""docstring for ClassName"""
-
+	"""Webmanager allows you to create a website which 
+	will then """
 
 	@cherrypy.expose
 	def index(self):
@@ -48,7 +48,7 @@ class WebManager():
 		elif(RE != "" and RA == "" and RI == "" ):
 			return self.searchEquipment(RE)
 		elif(RI != "" and RA == "" and RE == "" ):
-			return "<h1>Afficher table installations<h1>"
+			return self.searchInstalation(RI)
 		else:
 			return "<h1>Vous ne pouvez rechercher que dans une table a la foi ! </h1>"
 		
@@ -81,7 +81,7 @@ class WebManager():
 		bandeau = bandeau + "<th>equActivitePratique</th><th>equActiviteSalleSpe</th><th>actNivLib</th></tr>"
 		chaine = "<table style='width:100%' border='1'>"+bandeau
 
-		for line in c.execute("select * from activity where inseeNb ='"+param+"'"" OR comLib like '%"+param+"%' OR equipementId ='"+param+"' OR actlib like '%"+param+"%'").fetchall():
+		for line in c.execute("select * from activity where inseeNb ='"+param+"' OR comLib like '%"+param+"%' OR equipementId ='"+param+"' OR actlib like '%"+param+"%'").fetchall():
 			chaine = chaine + "<tr>"
 			for elem in range(len(line)):
 				chaine = chaine+"<td>"+line[elem]+"</td>"
@@ -98,7 +98,7 @@ class WebManager():
 		bandeau = bandeau + "<th>equNom</th><th>equNomBatiment </th></tr>"
 		chaine = "<table style='width:100%' border='1'>"+bandeau
 
-		for line in c.execute("select * from equipment").fetchall():
+		for line in c.execute("select * from equipment where comInsee ='"+param+"' OR comLib like '%"+param+"%' OR equAnneeService='"+param+"' OR equNom like '%"+param+"%'").fetchall():
 			chaine = chaine + "<tr>"
 			for elem in range(len(line)):
 				chaine = chaine+"<td>"+line[elem]+"</td>"
@@ -106,6 +106,21 @@ class WebManager():
 			chaine = chaine + "</tr>"
 		return chaine+"</table>"
 
+	@cherrypy.expose
+	def searchInstalation(self,param):
+		conn = sqlite3.connect(dataBasePath)
+		c = conn.cursor();
+		bandeau = "<tr><th>comLib</th><th>comInsee</th><th>insCodePostal</th><th>insLieuDit</th>"
+		bandeau = bandeau + "<th>insNoVoie</th><th>insLibelleVoie</th><th>nb_Equipements</th><th>nb_FicheEquipement</th></tr>"
+		chaine = "<table style='width:100%' border='1'>"+bandeau
+
+		for line in c.execute("select * from installations where comLib like '%"+param+"%' OR comInsee ='"+param+"' OR insCodePostal='"+param+"' OR insLieuDit like '%"+param+"%' OR insLibelleVoie like '%"+param+"%'").fetchall():
+			chaine = chaine + "<tr>"
+			for elem in range(len(line)):
+				chaine = chaine+"<td>"+line[elem]+"</td>"
+
+			chaine = chaine + "</tr>"
+		return chaine+"</table>"
 
 	@cherrypy.expose
 	def equipment(self):
