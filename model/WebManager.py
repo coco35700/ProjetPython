@@ -9,11 +9,49 @@ class WebManager():
 
 	@cherrypy.expose
 	def index(self):
-		refActivity = "<a href='http://localhost:8080/activity'>Activités</a>"
-		refEquipment = "<a href='http://localhost:8080/equipment'>Equipements</a>"
-		refInstallation = "<a href='http://localhost:8080/installation'>Installations</a>"
+		page =  """	<html>
+					<body>
+					<h1>Recherche</h1>
+					<form method='get' action='test'>
+						<table border="1">
+						<tr>
+							<td>Activités</td>
+							<td><input type ='textArea' name='RA'></td>
+						</tr>
+						<tr>
+							<td>Equipements</td>
+							<td><input type ='textArea' name='RE'></td>
+						</tr>
+						<tr>
+							<td>installations</td>
+							<td><input type ='textArea' name='RI'></td>
+						</tr>
+						</table>
+						<button type="submit">Rechercher</button>
+					</form>
 
-		return refActivity+"</br>"+refEquipment+"</br>"+refInstallation
+						<h1>Afficher dirrectement les tables : </h1>
+
+						<a href='http://localhost:8080/activity'>Activités</a></br>
+						<a href='http://localhost:8080/equipment'>Equipements</a></br>
+						<a href='http://localhost:8080/installation'>Installations</a></br>
+						
+					</body>
+					</html>
+				"""  
+		return page
+
+	@cherrypy.expose
+	def test(self,RA,RE,RI):
+		if(RA != "" and RE == "" and RI == "" ):
+			return self.searchActivity(RA)
+		elif(RE != "" and RA == "" and RI == "" ):
+			return "<h1>Afficher table equipment<h1>"
+		elif(RI != "" and RA == "" and RE == "" ):
+			return "<h1>Afficher table installations<h1>"
+		else:
+			return "<h1>Vous ne pouvez rechercher que dans une table a la foi ! </h1>"
+		
 
 	@cherrypy.expose
 	def activity(self):
@@ -32,6 +70,25 @@ class WebManager():
 
 			chaine = chaine + "</tr>"
 		return chaine+"</table>"
+
+	@cherrypy.expose
+	def searchActivity(self,param):
+		conn = sqlite3.connect(dataBasePath)
+		c = conn.cursor();
+		
+		bandeau = "<tr><th>inseeNb</th><th>comLib</th><th>equipmentId</th><th>equNbEquIdentique</th>"
+		bandeau = bandeau + "<th>actCode</th><th>actLib</th><th>quActivitePraticable</th>"
+		bandeau = bandeau + "<th>equActivitePratique</th><th>equActiviteSalleSpe</th><th>actNivLib</th></tr>"
+		chaine = "<table style='width:100%' border='1'>"+bandeau
+
+		for line in c.execute("select * from activity where inseeNb ='"+param+"'"" OR comLib like '%"+param+"%' OR equipementId ='"+param+"' OR actlib like '%"+param+"%'").fetchall():
+			chaine = chaine + "<tr>"
+			for elem in range(len(line)):
+				chaine = chaine+"<td>"+line[elem]+"</td>"
+
+			chaine = chaine + "</tr>"
+		return chaine+"</table>"
+
 
 	@cherrypy.expose
 	def equipment(self):
@@ -67,3 +124,5 @@ class WebManager():
 		return chaine+"</table>"
 		
 cherrypy.quickstart(WebManager())
+
+

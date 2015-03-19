@@ -26,6 +26,7 @@ class Activity :
 	def exportToDataBase(self,database):
 		database.c.execute('''INSERT INTO activity
     		VALUES (\"{0}\", \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\", \"{6}\", \"{7}\", \"{8}\", \"{9}\")'''.format(
-    			self.inseeNb,self.comLib,self.equipementId,self.equNbEquIdentique,self.actCode,self.actLib,
-				self.equActivitePraticable,self.equActivitePratique,self.equActiviteSalleSpe,self.actNivLib))
+    			self.inseeNb.strip(),self.comLib.strip(),self.equipementId.strip(),self.equNbEquIdentique.strip(),
+    			self.actCode,self.actLib,self.equActivitePraticable,self.equActivitePratique,
+    			self.equActiviteSalleSpe,self.actNivLib))
 
