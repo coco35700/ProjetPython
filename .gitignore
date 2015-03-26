@@ -1,1 +1,5 @@
 *pycache*
+cherrypy/
+data/
+*.pyc
+*~*

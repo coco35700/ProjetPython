@@ -11,8 +11,8 @@ class WebManager():
 	def index(self):
 		page =  """	<html>
 					<body>
-					<h1>Recherche</h1>
-					<form method='get' action='test'>
+					<h1>Rechercher dans une Table</h1>
+					<form method='get' action='routeur'>
 						<table border="1">
 						<tr>
 							<td>Activités</td>
@@ -42,13 +42,13 @@ class WebManager():
 		return page
 
 	@cherrypy.expose
-	def test(self,RA,RE,RI):
+	def routeur(self,RA,RE,RI):
 		if(RA != "" and RE == "" and RI == "" ):
-			return self.searchActivity(RA)
+			return self.search_activity(RA)
 		elif(RE != "" and RA == "" and RI == "" ):
-			return self.searchEquipment(RE)
+			return self.search_equipment(RE)
 		elif(RI != "" and RA == "" and RE == "" ):
-			return self.searchInstalation(RI)
+			return self.search_installation(RI)
 		else:
 			return "<h1>Vous ne pouvez rechercher que dans une table a la foi ! </h1>"
 		
@@ -72,7 +72,7 @@ class WebManager():
 		return chaine+"</table>"
 
 	@cherrypy.expose
-	def searchActivity(self,param):
+	def search_activity(self,param):
 		conn = sqlite3.connect(dataBasePath)
 		c = conn.cursor();
 		
@@ -81,7 +81,9 @@ class WebManager():
 		bandeau = bandeau + "<th>equActivitePratique</th><th>equActiviteSalleSpe</th><th>actNivLib</th></tr>"
 		chaine = "<table style='width:100%' border='1'>"+bandeau
 
-		for line in c.execute("select * from activity where inseeNb ='"+param+"' OR comLib like '%"+param+"%' OR equipementId ='"+param+"' OR actlib like '%"+param+"%'").fetchall():
+		request = "select * from activity where inseeNb ='"+param+"' OR comLib like '%"+param+"%'"
+		request = request + " OR equipementId ='"+param+"' OR actlib like '%"+param+"%'"
+		for line in c.execute(request).fetchall():
 			chaine = chaine + "<tr>"
 			for elem in range(len(line)):
 				chaine = chaine+"<td>"+line[elem]+"</td>"
@@ -90,7 +92,7 @@ class WebManager():
 		return chaine+"</table>"
 
 	@cherrypy.expose
-	def searchEquipment(self,param):
+	def search_equipment(self,param):
 		conn = sqlite3.connect(dataBasePath)
 		c = conn.cursor();
 
@@ -98,7 +100,9 @@ class WebManager():
 		bandeau = bandeau + "<th>equNom</th><th>equNomBatiment </th></tr>"
 		chaine = "<table style='width:100%' border='1'>"+bandeau
 
-		for line in c.execute("select * from equipment where comInsee ='"+param+"' OR comLib like '%"+param+"%' OR equAnneeService='"+param+"' OR equNom like '%"+param+"%'").fetchall():
+		request = "select * from equipment where comInsee ='"+param+"' OR comLib like '%"+param+"%' OR"
+		request = request + " equAnneeService='"+param+"' OR equNom like '%"+param+"%'"
+		for line in c.execute(request).fetchall():
 			chaine = chaine + "<tr>"
 			for elem in range(len(line)):
 				chaine = chaine+"<td>"+line[elem]+"</td>"
@@ -107,14 +111,16 @@ class WebManager():
 		return chaine+"</table>"
 
 	@cherrypy.expose
-	def searchInstalation(self,param):
+	def search_installation(self,param):
 		conn = sqlite3.connect(dataBasePath)
 		c = conn.cursor();
 		bandeau = "<tr><th>comLib</th><th>comInsee</th><th>insCodePostal</th><th>insLieuDit</th>"
 		bandeau = bandeau + "<th>insNoVoie</th><th>insLibelleVoie</th><th>nb_Equipements</th><th>nb_FicheEquipement</th></tr>"
 		chaine = "<table style='width:100%' border='1'>"+bandeau
 
-		for line in c.execute("select * from installations where comLib like '%"+param+"%' OR comInsee ='"+param+"' OR insCodePostal='"+param+"' OR insLieuDit like '%"+param+"%' OR insLibelleVoie like '%"+param+"%'").fetchall():
+		request = "select * from installations where comLib like '%"+param+"%' OR comInsee ='"+param+"' OR insCodePostal='"+param+"'"
+		request = request + " OR insLieuDit like '%"+param+"%' OR insLibelleVoie like '%"+param+"%'"
+		for line in c.execute(request).fetchall():
 			chaine = chaine + "<tr>"
 			for elem in range(len(line)):
 				chaine = chaine+"<td>"+line[elem]+"</td>"
