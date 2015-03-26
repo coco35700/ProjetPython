@@ -12,13 +12,21 @@ class UnSerializerActivity :
 	def __init__(self):
 		self.collection = []
 
-	def unSerialize(self):
+	def unSerialize(self,path=None):
 		""" 
 		Transforms a json File containing activities informations
 	    into a list of activity objects
+
+	    >>> un = UnSerializerActivity()
+	    >>> un.unSerialize("../test/testActivity.json")
+	    >>> un.collection[0].com_lib
+	    'Chapelle-Basse-Mer'
 		"""
+		if path == None:
+			path = UnSerializerActivity.path
+
 		try:
-			with open(UnSerializerActivity.path) as data:
+			with open(path) as data:
 				json_data = json.load(data)
 
 				for item in json_data["data"]:
@@ -31,3 +39,4 @@ class UnSerializerActivity :
 			print("fichier inexistant")
 		except KeyError:
 			print("erreur de clé, clé inéxistante ou mal orthographiée")
+
