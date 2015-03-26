@@ -3,12 +3,19 @@ import sqlite3
 
 dataBasePath = "dataBase/DB.db"
 
-class WebManager():
-	"""Webmanager allows you to create a website which 
-	will then """
+class WebManager(object):
+	""" 
+	Webmanager allows you to create a website which 
+	will then display information about our database
+	"""
+
 
 	@cherrypy.expose
 	def index(self):
+		"""
+		Creates the main page of The website, a form to search within the tables
+		and links to view tables as a whole
+		"""
 		page =  """	<html>
 					<body>
 					<h1>Rechercher dans une Table</h1>
@@ -43,6 +50,10 @@ class WebManager():
 
 	@cherrypy.expose
 	def routeur(self,RA,RE,RI):
+		"""
+		Redirects to the good page with the selected parameter
+		"""
+
 		if(RA != "" and RE == "" and RI == "" ):
 			return self.search_activity(RA)
 		elif(RE != "" and RA == "" and RI == "" ):
@@ -55,6 +66,9 @@ class WebManager():
 
 	@cherrypy.expose
 	def activity(self):
+		"""
+		This page shows our Activities as a whole
+		"""
 		conn = sqlite3.connect(dataBasePath)
 		c = conn.cursor();
 		
@@ -72,7 +86,49 @@ class WebManager():
 		return chaine+"</table>"
 
 	@cherrypy.expose
+	def equipment(self):
+		"""
+		This page shows our equipments a whole
+		"""
+		conn = sqlite3.connect(dataBasePath)
+		c = conn.cursor();
+
+		bandeau = "<tr><th>comInsee</th><th>comLib</th><th>equipmentFile</th><th>equAnneeService</th>"
+		bandeau = bandeau + "<th>equNom</th><th>equNomBatiment </th></tr>"
+		chaine = "<table style='width:100%' border='1'>"+bandeau
+
+		for line in c.execute("select * from equipment").fetchall():
+			chaine = chaine + "<tr>"
+			for elem in range(len(line)):
+				chaine = chaine+"<td>"+line[elem]+"</td>"
+
+			chaine = chaine + "</tr>"
+		return chaine+"</table>"
+
+	@cherrypy.expose
+	def installation(self):
+		"""
+		This page shows our installations as a whole
+		"""
+		conn = sqlite3.connect(dataBasePath)
+		c = conn.cursor();
+		bandeau = "<tr><th>comLib</th><th>comInsee</th><th>insCodePostal</th><th>insLieuDit</th>"
+		bandeau = bandeau + "<th>insNoVoie</th><th>insLibelleVoie</th><th>nb_Equipements</th><th>nb_FicheEquipement</th></tr>"
+		chaine = "<table style='width:100%' border='1'>"+bandeau
+
+		for line in c.execute("select * from installations").fetchall():
+			chaine = chaine + "<tr>"
+			for elem in range(len(line)):
+				chaine = chaine+"<td>"+line[elem]+"</td>"
+
+			chaine = chaine + "</tr>"
+		return chaine+"</table>"
+
+	@cherrypy.expose
 	def search_activity(self,param):
+		"""
+		This page shows the selected lines from the activity Table
+		"""
 		conn = sqlite3.connect(dataBasePath)
 		c = conn.cursor();
 		
@@ -93,6 +149,9 @@ class WebManager():
 
 	@cherrypy.expose
 	def search_equipment(self,param):
+		"""
+		This page shows the selected lines from the equipment Table
+		"""
 		conn = sqlite3.connect(dataBasePath)
 		c = conn.cursor();
 
@@ -112,6 +171,9 @@ class WebManager():
 
 	@cherrypy.expose
 	def search_installation(self,param):
+		"""
+		This page shows the selected lines from the installation Table
+		"""
 		conn = sqlite3.connect(dataBasePath)
 		c = conn.cursor();
 		bandeau = "<tr><th>comLib</th><th>comInsee</th><th>insCodePostal</th><th>insLieuDit</th>"
@@ -128,38 +190,7 @@ class WebManager():
 			chaine = chaine + "</tr>"
 		return chaine+"</table>"
 
-	@cherrypy.expose
-	def equipment(self):
-		conn = sqlite3.connect(dataBasePath)
-		c = conn.cursor();
 
-		bandeau = "<tr><th>comInsee</th><th>comLib</th><th>equipmentFile</th><th>equAnneeService</th>"
-		bandeau = bandeau + "<th>equNom</th><th>equNomBatiment </th></tr>"
-		chaine = "<table style='width:100%' border='1'>"+bandeau
-
-		for line in c.execute("select * from equipment").fetchall():
-			chaine = chaine + "<tr>"
-			for elem in range(len(line)):
-				chaine = chaine+"<td>"+line[elem]+"</td>"
-
-			chaine = chaine + "</tr>"
-		return chaine+"</table>"
-
-	@cherrypy.expose
-	def installation(self):
-		conn = sqlite3.connect(dataBasePath)
-		c = conn.cursor();
-		bandeau = "<tr><th>comLib</th><th>comInsee</th><th>insCodePostal</th><th>insLieuDit</th>"
-		bandeau = bandeau + "<th>insNoVoie</th><th>insLibelleVoie</th><th>nb_Equipements</th><th>nb_FicheEquipement</th></tr>"
-		chaine = "<table style='width:100%' border='1'>"+bandeau
-
-		for line in c.execute("select * from installations").fetchall():
-			chaine = chaine + "<tr>"
-			for elem in range(len(line)):
-				chaine = chaine+"<td>"+line[elem]+"</td>"
-
-			chaine = chaine + "</tr>"
-		return chaine+"</table>"
 		
 cherrypy.quickstart(WebManager())
 

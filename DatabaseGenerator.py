@@ -7,22 +7,22 @@ from model.UnSerializerInstallation import UnSerializerInstallation
 data = DataBase()
 
 ''' tables creation '''
-data.creationTableActivity()
-data.creationTableEquipment()
-data.creationTableInstallation()
+data.creation_table_activity()
+data.creation_table_equipment()
+data.creation_table_installation()
 
 ''' export json data into the dataBase '''
 seri = UnSerializerActivity()
 seri.unSerialize()
-data.exportObjectList(seri.collection)
+data.export_object_list(seri.collection)
 
 seri = UnSerializerInstallation()
 seri.unSerialize()
-data.exportObjectList(seri.collection)
+data.export_object_list(seri.collection)
 
 seri = UnSerializerEquipment()
 seri.unSerialize()
-data.exportObjectList(seri.collection)
+data.export_object_list(seri.collection)
 
 ''' commit and disconnection ''' 
 data.conn.commit()

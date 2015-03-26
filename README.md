@@ -11,6 +11,5 @@ you will find at the ROOT two main files :
 model contains the python files representing an Activity, an Equipment 
 	 and an Installation
 
-dataBase contains the python file used to generate the database and 
-	the database itself : DB.db
+dataBase contains the python file used to generate the database itself : DB.db
 
