@@ -1,7 +1,10 @@
 import cherrypy
 import sqlite3
+from mako.template import Template
+from mako.lookup import TemplateLookup
 
 dataBasePath = "dataBase/DB.db"
+lookup = TemplateLookup(directories=["html"])
 
 class WebManager(object):
 	""" 
@@ -16,37 +19,8 @@ class WebManager(object):
 		Creates the main page of The website, a form to search within the tables
 		and links to view tables as a whole
 		"""
-		page =  """	<html>
-					<body>
-					<h1>Rechercher dans une Table</h1>
-					<form method='get' action='routeur'>
-						<table border="1">
-						<tr>
-							<td>Activités</td>
-							<td><input type ='textArea' name='RA'></td>
-						</tr>
-						<tr>
-							<td>Equipements</td>
-							<td><input type ='textArea' name='RE'></td>
-						</tr>
-						<tr>
-							<td>installations</td>
-							<td><input type ='textArea' name='RI'></td>
-						</tr>
-						</table>
-						<button type="submit">Rechercher</button>
-					</form>
-
-					<h1>Afficher dirrectement les tables : </h1>
-
-					<a href='http://localhost:8080/activity'>Activités</a></br>
-					<a href='http://localhost:8080/equipment'>Equipements</a></br>
-					<a href='http://localhost:8080/installation'>Installations</a></br>
-						
-					</body>
-					</html>
-				"""  
-		return page
+		template = lookup.get_template("index.html")  
+		return template.render()
 
 	@cherrypy.expose
 	def routeur(self,RA,RE,RI):
@@ -69,9 +43,10 @@ class WebManager(object):
 		"""
 		This page shows our Activities as a whole
 		"""
-		conn = sqlite3.connect(dataBasePath)
-		c = conn.cursor();
 		
+		dataBasePath = 'dataBase/DB.db'
+		conn = sqlite3.connect(dataBasePath)
+		c = conn.cursor()
 		bandeau = "<tr><th>inseeNb</th><th>comLib</th><th>equipmentId</th><th>equNbEquIdentique</th>"
 		bandeau = bandeau + "<th>actCode</th><th>actLib</th><th>quActivitePraticable</th>"
 		bandeau = bandeau + "<th>equActivitePratique</th><th>equActiviteSalleSpe</th><th>actNivLib</th></tr>"

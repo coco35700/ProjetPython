@@ -1,6 +1,7 @@
 *pycache*
 test/
 cherrypy/
+mako/
 data/
 *.pyc
 *~*
