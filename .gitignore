@@ -1,4 +1,5 @@
 *pycache*
+test/
 cherrypy/
 data/
 *.pyc

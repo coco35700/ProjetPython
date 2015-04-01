@@ -17,9 +17,18 @@ class UnSerializerInstallation :
 		""" 
 		Transforms a json File containing installations informations
 		into a list of installation objects
+
+		>>> un = UnSerializerInstallation()
+	    >>> un.unSerialize("../test/testInstallation.json")
+	    >>> un.collection[0].InsNbPlaceParking
+	    '50'
 		"""
+
+		if path == None:
+			path = UnSerializerActivity.path
+
 		try:
-			with open(UnSerializerInstallation.path) as data:
+			with open(path) as data:
 				json_data = json.load(data)
 
 				for item in json_data["data"]:

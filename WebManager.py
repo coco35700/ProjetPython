@@ -37,11 +37,11 @@ class WebManager(object):
 						<button type="submit">Rechercher</button>
 					</form>
 
-						<h1>Afficher dirrectement les tables : </h1>
+					<h1>Afficher dirrectement les tables : </h1>
 
-						<a href='http://localhost:8080/activity'>Activités</a></br>
-						<a href='http://localhost:8080/equipment'>Equipements</a></br>
-						<a href='http://localhost:8080/installation'>Installations</a></br>
+					<a href='http://localhost:8080/activity'>Activités</a></br>
+					<a href='http://localhost:8080/equipment'>Equipements</a></br>
+					<a href='http://localhost:8080/installation'>Installations</a></br>
 						
 					</body>
 					</html>

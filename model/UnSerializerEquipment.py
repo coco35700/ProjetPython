@@ -16,9 +16,17 @@ class UnSerializerEquipment :
 		"""
 		Transforms a json File containing equipments informations
 		into a list of equipment objects
-		"""	
+
+		>>> un = UnSerializerEquipment()
+	    >>> un.unSerialize("../test/testEquipment.json")
+	    >>> un.collection[0].EquNom
+	    'TERRAIN EXTERIEUR DE VOLLEY- BALL'
+		"""
+		if path == None:
+			path = UnSerializerActivity.path
+
 		try:
-			with open(UnSerializerEquipment.path) as data:
+			with open(path) as data:
 				json_data = json.load(data)
 
 				for item in json_data["data"]:
