@@ -1,0 +1,44 @@
+## -*- coding: utf-8 -*-
+<html>
+	<head>
+	<script type="text/javascript">
+	var taA = document.getElementById("ra");
+	var taE = document.getElementById("re");
+	var taI = document.getElementById("ri");
+
+	function reset(){
+		taA.value = "";
+		taE.value = "";
+		taI.value = "";
+	}
+
+	</script>
+	</head>
+	<body>
+	<h1>Rechercher dans une Table</h1>
+	<form method='get' action='routeur'>
+		<table border="1">
+		<tr>
+			<td>Activités</td>
+			<td><input type ='textArea' onclick="reset()" name='RA' id="ra"></td>
+		</tr>
+		<tr>
+			<td>Equipements</td>
+			<td><input type ='textArea' onclick="reset()" name='RE' id="re"></td>
+		</tr>
+		<tr>
+			<td>installations</td>
+			<td><input type ='textArea' onclick="reset()" name='RI' id="ri"></td>
+		</tr>
+		</table>
+		<button type="submit">Rechercher</button>
+	</form>
+
+	<h1>Afficher dirrectement les tables : </h1>
+
+	<a href='http://localhost:8080/activity'>Activités</a></br>
+	<a href='http://localhost:8080/equipment'>Equipements</a></br>
+	<a href='http://localhost:8080/installation'>Installations</a></br>
+	
+	</body>
+</html>
