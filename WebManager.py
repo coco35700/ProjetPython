@@ -112,8 +112,8 @@ class WebManager(object):
 		bandeau = bandeau + "<th>equActivitePratique</th><th>equActiviteSalleSpe</th><th>actNivLib</th></tr>"
 		chaine = "<table style='width:100%' border='1'>"+bandeau
 
-		request = "select * from activity where inseeNb ='"+param+"' OR comLib like '%"+param+"%'"
-		request = request + " OR equipementId ='"+param+"' OR actlib like '%"+param+"%'"
+		request = "select * from activity where inseeNb like '%"+param+"' OR comLib like '%"+param+"%'"
+		request = request + " OR equipementId like '%"+param+"' OR actlib like '%"+param+"%'"
 		for line in c.execute(request).fetchall():
 			chaine = chaine + "<tr>"
 			for elem in range(len(line)):
@@ -134,8 +134,8 @@ class WebManager(object):
 		bandeau = bandeau + "<th>equNom</th><th>equNomBatiment </th></tr>"
 		chaine = "<table style='width:100%' border='1'>"+bandeau
 
-		request = "select * from equipment where comInsee ='"+param+"' OR comLib like '%"+param+"%' OR"
-		request = request + " equAnneeService='"+param+"' OR equNom like '%"+param+"%'"
+		request = "select * from equipment where comInsee like '%"+param+"' OR comLib like '%"+param+"%' OR"
+		request = request + " equAnneeService like '%"+param+"' OR equNom like '%"+param+"%'"
 		for line in c.execute(request).fetchall():
 			chaine = chaine + "<tr>"
 			for elem in range(len(line)):
@@ -155,7 +155,7 @@ class WebManager(object):
 		bandeau = bandeau + "<th>insNoVoie</th><th>insLibelleVoie</th><th>nb_Equipements</th><th>nb_FicheEquipement</th></tr>"
 		chaine = "<table style='width:100%' border='1'>"+bandeau
 
-		request = "select * from installations where comLib like '%"+param+"%' OR comInsee ='"+param+"' OR insCodePostal='"+param+"'"
+		request = "select * from installations where comLib like '%"+param+"%' OR comInsee like '%"+param+"' OR insCodePostal like '%"+param+"'"
 		request = request + " OR insLieuDit like '%"+param+"%' OR insLibelleVoie like '%"+param+"%'"
 		for line in c.execute(request).fetchall():
 			chaine = chaine + "<tr>"
